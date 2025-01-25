@@ -8,7 +8,7 @@ export class UserController {
 
   @Post()
   async createUser(@Body() dataUser: CreateUserDTO) {
-    this.userRepository.save(dataUser);
+    await this.userRepository.save(dataUser);
     return dataUser;
   }
 
