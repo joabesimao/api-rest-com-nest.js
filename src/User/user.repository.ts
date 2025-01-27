@@ -1,9 +1,17 @@
-import { Injectable } from '@nestjs/common';
+import { Delete, Injectable, Param } from '@nestjs/common';
 import { UserEntity } from './entity/user.entity';
 
 @Injectable()
 export class UserRepository {
   private users: UserEntity[] = [];
+
+  private findById(id: string) {
+    const possibleUser = this.users.find((userSave) => userSave.id === id);
+    if (!possibleUser) {
+      throw new Error('Usuario não existe');
+    }
+    return possibleUser;
+  }
 
   async save(user: UserEntity) {
     this.users.push(user);
@@ -19,11 +27,7 @@ export class UserRepository {
   }
 
   async update(id: string, dataOfUpdate: Partial<UserEntity>) {
-    const possibleUser = this.users.find((userSave) => userSave.id === id);
-
-    if (!possibleUser) {
-      throw new Error('Usuario não existe');
-    }
+    const possibleUser = this.findById(id);
     Object.entries(dataOfUpdate).forEach(([key, val]) => {
       if (key === 'id') {
         return;
@@ -31,5 +35,12 @@ export class UserRepository {
       possibleUser[key] = val;
     });
     return possibleUser;
+  }
+
+  async removeUser(@Param('id') id: string) {
+    const user = this.findById(id);
+    this.users = this.users.filter((userSave) => userSave.id !== id);
+
+    return user;
   }
 }
