@@ -1,5 +1,5 @@
 import { IsEmail, IsNotEmpty, MinLength } from 'class-validator';
-import { EmailIsUnic } from '../validacao/email-unico.validator';
+import { EmailIsUnic } from '../validacao/email-unic.validator';
 
 export class CreateUserDTO {
   @IsNotEmpty({ message: 'O nome não pode ser vazio' })

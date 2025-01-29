@@ -1,6 +1,13 @@
-import { Controller, Get, Post, Body, Put, Param } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Put,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { randomUUID } from 'crypto';
-import { v4 as uuid } from 'uuid';
 import { CreateProductDTO } from './dto/create-product.dto';
 import { ListProductDTO } from './dto/list-Product.dto';
 import { UpdateProductDTO } from './dto/update-productDTO';
@@ -22,19 +29,20 @@ export class ProductController {
 
   @Post()
   async createProduct(@Body() product: CreateProductDTO) {
-    const obj = new ProductEntity();
-    obj.id = randomUUID();
-    obj.nome = product.nome;
-    obj.valor = product.valor;
-    obj.quantidade = product.quantidade;
-    obj.descricao = product.descricao;
-    obj.caracteristicas = product.caracteristicas;
-    obj.imagens = product.imagens;
-    obj.categoria = product.categoria;
+    const objectProduct = new ProductEntity();
+    objectProduct.id = randomUUID();
+    objectProduct.nome = product.nome;
+    objectProduct.valor = product.valor;
+    objectProduct.quantidade = product.quantidade;
+    objectProduct.descricao = product.descricao;
+    objectProduct.caracteristicas = product.caracteristicas;
+    objectProduct.imagens = product.imagens;
+    objectProduct.categoria = product.categoria;
 
-    const produtoCadastrado = await this.productRepository.saveProduct(obj);
+    const registeredProduct =
+      await this.productRepository.saveProduct(objectProduct);
     return {
-      produto: produtoCadastrado,
+      produto: registeredProduct,
       mensagem: 'produto cadastrado com sucesso',
     };
   }
@@ -52,5 +60,11 @@ export class ProductController {
       produto: updatedProduct,
       mensagem: 'Produto atualizado com sucesso',
     };
+  }
+
+  @Delete('/:id')
+  async deleteProduct(@Param('id') id: string) {
+    const removeProduct = await this.productRepository.removeProduct(id);
+    return removeProduct;
   }
 }
