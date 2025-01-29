@@ -1,40 +1,17 @@
 import { Type } from 'class-transformer';
 import {
-  IsUrl,
-  IsString,
-  IsNotEmpty,
-  ValidateNested,
-  IsArray,
   ArrayMinSize,
-  IsUUID,
+  IsArray,
+  IsNotEmpty,
   IsNumber,
+  IsString,
   MaxLength,
   Min,
+  ValidateNested,
 } from 'class-validator';
+import { CaracterProductDTO, ImageProductDTO } from './create-product.dto';
 
-export class CaracterProductDTO {
-  @IsString()
-  @IsNotEmpty({ message: 'Nome da cadasterística não pode ser vazio' })
-  nome: string;
-
-  @IsString()
-  @IsNotEmpty({ message: 'Descrição da característica não pode ser vazio' })
-  descricao: string;
-}
-
-export class ImageProductDTO {
-  @IsUrl()
-  url: string;
-
-  @IsString()
-  @IsNotEmpty({ message: 'Descrição da imagem não pode ser vazia' })
-  descricao: string;
-}
-
-export class CreateProductDTO {
-  /* @IsUUID(undefined, { message: 'ID de usuario invalido' })
-  id: string; */
-
+export class UpdateProductDTO {
   @IsString()
   @IsNotEmpty({ message: 'Nome do produto não pode ser vazio' })
   nome: string;
