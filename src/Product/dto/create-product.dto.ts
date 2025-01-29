@@ -6,7 +6,6 @@ import {
   ValidateNested,
   IsArray,
   ArrayMinSize,
-  IsUUID,
   IsNumber,
   MaxLength,
   Min,
