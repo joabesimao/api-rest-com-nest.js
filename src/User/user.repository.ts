@@ -1,4 +1,4 @@
-import { Delete, Injectable, Param } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { UserEntity } from './entity/user.entity';
 
 @Injectable()
@@ -37,7 +37,7 @@ export class UserRepository {
     return possibleUser;
   }
 
-  async removeUser(@Param('id') id: string) {
+  async removeUser(id: string) {
     const user = this.findById(id);
     this.users = this.users.filter((userSave) => userSave.id !== id);
 
